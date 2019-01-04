@@ -36,23 +36,28 @@ export default class Form extends Component<Props> {
 
   login = () => {
     fetch('http://3.82.243.220:8000/api/loginUsuarioSistema', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         correo: this.state.username,
-        claveSeguridad: this.state.password
-      }),
-    }).then((response) => response.json())
-        .then((res) => {
-          if (res.success === true){
-            console.log(res.message);
-          }else{
-            alert(res.message)
-          }
-    });
+        claveSeguridad: this.state.password,
+      })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      if(responseData.status === 400){
+        alert("Error")
+      }else{
+        alert(
+          "POST Response" + "Response Body -> " + JSON.stringify(responseData)
+        )
+      }
+    })
+    .done();
+
   }
 
 
