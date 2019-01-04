@@ -10,6 +10,7 @@ export default class Logo extends Component<Props> {
           style={{width: 390, height: 150}}
           source={require('../img/logo.png')}
         />
+        <Text style={styles.logoText}>Welcome to Search App</Text>
       </View>
     );
   }
@@ -19,5 +20,12 @@ export default class Logo extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  logoText: {
+    marginVertical: 15,
+    fontSize: 18,
+    color: 'rgba(255, 255, 255, 0.7)'
   }
 });
