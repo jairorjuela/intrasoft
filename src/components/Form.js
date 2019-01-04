@@ -1,37 +1,49 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import Logo from './Logo';
+import Filtros from '../pages/Filtros'
 
 type Props = {};
 export default class Form extends Component<Props> {
   render() {
-    return (
-      <View style={styles.container}>
-        <TextInput style={styles.inputBox}
-          placeholder='Email'
-          placeholderTextColor='white'
-          textContentType='emailAddress'
-          onSubmitEditing={() => this.password.focus()}
-          onChangeText={(username) => this.setState({username})}
-          value={this.state.username}
-        />
-        <TextInput style={styles.inputBox}
-          placeholder='Password'
-          placeholderTextColor='white'
-          secureTextEntry={true}
-          ref={(input) => this.password = input}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-        />
-        <TouchableOpacity onPress={this.login} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    if(this.state.holi === false){
+      return (
+        <View style={styles.container}>
+        <Logo/>
+          <TextInput style={styles.inputBox}
+            placeholder='Email'
+            placeholderTextColor='white'
+            textContentType='emailAddress'
+            onSubmitEditing={() => this.password.focus()}
+            onChangeText={(username) => this.setState({username})}
+            value={this.state.username}
+          />
+          <TextInput style={styles.inputBox}
+            placeholder='Password'
+            placeholderTextColor='white'
+            secureTextEntry={true}
+            ref={(input) => this.password = input}
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+          />
+          <TouchableOpacity onPress={this.login} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }else{
+      return(
+        <View style={styles.container}>
+          <Filtros />
+        </View>
+      );
+    }
+
   }
 
   constructor(Props) {
     super(Props);
-    this.state = {username: '', password: ''};
+    this.state = {username: '', password: '', holi: false};
   }
 
   login = () => {
@@ -51,17 +63,16 @@ export default class Form extends Component<Props> {
       if(responseData.status === 400){
         alert("Error")
       }else{
+        this.setState({
+          holi: true
+        })
         alert(
           "POST Response" + "Response Body -> " + JSON.stringify(responseData)
         )
       }
     })
     .done();
-
   }
-
-
-
 
 }
 
