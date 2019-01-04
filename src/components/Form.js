@@ -43,7 +43,12 @@ export default class Form extends Component<Props> {
 
   constructor(Props) {
     super(Props);
-    this.state = {username: '', password: '', holi: false};
+    this.state = {
+      username: '',
+      password: '',
+      holi: false,
+      user: []
+    };
   }
 
   login = () => {
@@ -64,10 +69,11 @@ export default class Form extends Component<Props> {
         alert("Error")
       }else{
         this.setState({
-          holi: true
+          holi: true,
+          user: this.state.user.concat(String(responseData.nombre) + " " + String(responseData.apellido))
         })
         alert(
-          "POST Response" + "Response Body -> " + JSON.stringify(responseData)
+           "Bienvenido  " + this.state.user
         )
       }
     })
@@ -75,8 +81,6 @@ export default class Form extends Component<Props> {
   }
 
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
