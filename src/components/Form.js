@@ -2,25 +2,59 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 type Props = {};
-export default class Logo extends Component<Props> {
+export default class Form extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
         <TextInput style={styles.inputBox}
           placeholder='Email'
           placeholderTextColor='white'
+          textContentType='emailAddress'
+          onSubmitEditing={() => this.password.focus()}
+          onChangeText={(username) => this.setState({username})}
+          value={this.state.username}
         />
         <TextInput style={styles.inputBox}
           placeholder='Password'
           placeholderTextColor='white'
+          secureTextEntry={true}
+          ref={(input) => this.password = input}
+          onChangeText={(password) => this.setState({password})}
+          value={this.state.password}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={this.login} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     );
   }
+
+  constructor(Props) {
+    super(Props);
+    this.state = {username: '', password: ''};
+  }
+
+  login = () => {
+    fetch('http://3.82.243.220:8000/api/loginUsuarioSistema', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        correo: this.state.username,
+        claveSeguridad: this.state.password
+      })
+    });
+
+
+  }
+
+
+
+
 }
+
 
 
 const styles = StyleSheet.create({
@@ -36,13 +70,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 26,
     fontSize: 20,
     color: 'white',
-    marginVertical: 22
+    marginVertical: 16
   },
   button: {
     width: 300,
     backgroundColor: '#0069c0',
     borderRadius: 18,
-    marginVertical: 22,
+    marginVertical: 16,
     paddingVertical: 16,
     borderColor: 'white',
     borderWidth: 3
