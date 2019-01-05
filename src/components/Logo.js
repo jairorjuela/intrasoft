@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image} from 'react-native';
 
+// Clase que Incluye el logo y un texto de saludo
 type Props = {};
 export default class Logo extends Component<Props> {
   render() {
@@ -10,13 +11,13 @@ export default class Logo extends Component<Props> {
           style={{width: 390, height: 150}}
           source={require('../img/logo.png')}
         />
-        <Text style={styles.logoText}>Welcome to Search App</Text>
+        <Text style={styles.logoText}>Bienvenido a tu App de Busqueda</Text>
       </View>
     );
   }
 }
 
-
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

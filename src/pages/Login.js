@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, StatusBar} from 'react-native';
 import Form from '../components/Form';
 
-
+// Componente que direcciona al Formulario de ingreso
 type Props = {};
 export default class Login extends Component<Props> {
   render() {
@@ -14,6 +14,8 @@ export default class Login extends Component<Props> {
   }
 }
 
+
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

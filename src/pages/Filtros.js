@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity} from 'react-native';
 
+
+// Constantes para realizar las peticiones
 const API = 'http://3.82.243.220:8000/api/filtrar/usuarios?nombre=';
+const APII = 'http://3.82.243.220:8000/api/filtrar/usuarios?apellido=';
+const APIII = 'http://3.82.243.220:8000/api/filtrar/usuarios?numeroDocumento=';
+
 
 type Props = {};
 
@@ -18,32 +23,84 @@ export default class Filtros extends Component<Props> {
     this.search = this.search.bind(this);
   }
 
+// Funcion para realizar la busqueda
   search() {
-    const arr = this.state.arr
-    this.setState({
-      arr: [],
-      nombre: this.state.nombre,
-    });
-    const NOM = this.state.nombre;
-    fetch(API + NOM)
-    .then((response) => response.json())
-    .then((responseData) => {
-      if(responseData.status === 400){
-        alert("Error")
-      }else{
-        this.setState({
-          holi: !this.state.holi,
-          arr: this.state.arr.concat(responseData),
-          nombre: ''
-        });
-      }
-    })
-    .done();
+    const arr = this.state.arr;
+    const nombre = this.state.nombre;
+    const apellido = this.state.apellido;
+    const documento = this.state.documento;
+    if(nombre !== '' && apellido === '' && documento === ''){
+      this.setState({
+        arr: [],
+        nombre: this.state.nombre
+      });
+      const NOM = this.state.nombre;
+      fetch(API + NOM)
+      .then((response) => response.json())
+      .then((responseData) => {
+        if(responseData.status === 400){
+          alert("Error")
+        }else{
+          this.setState({
+            holi: !this.state.holi,
+            arr: this.state.arr.concat(responseData),
+            nombre: ''
+          });
+        }
+      })
+      .done();
+    }else if(nombre === '' && apellido !== '' && documento === ''){
+      this.setState({
+        arr: [],
+        apellido: this.state.apellido
+      });
+      const NOM = this.state.apellido;
+      fetch(APII + NOM)
+      .then((response) => response.json())
+      .then((responseData) => {
+        if(responseData.status === 400){
+          alert("Error")
+        }else{
+          this.setState({
+            holi: !this.state.holi,
+            arr: this.state.arr.concat(responseData),
+            apellido: ''
+          });
+        }
+      })
+      .done();
+    }else if(nombre === '' && apellido === '' && documento !== ''){
+      this.setState({
+        arr: [],
+        documento: this.state.documento
+      });
+      const NOM = this.state.documento;
+      fetch(APIII + NOM)
+      .then((response) => response.json())
+      .then((responseData) => {
+        if(responseData.status === 400){
+          alert("Error")
+        }else{
+          this.setState({
+            holi: !this.state.holi,
+            arr: this.state.arr.concat(responseData),
+            documento: ''
+          });
+        }
+      })
+      .done();
+    }else if(nombre === '' && apellido === '' && documento === ''){
+      this.setState({
+        holi: !this.state.holi
+      });
+    }
   }
 
 
   render() {
+// Variable que guarda el JSON de la respuesta del servidor
     var lista = this.state.obj;
+// Validacion que permite mostrar el formulario de busqueda
     if(this.state.holi === false){
       return (
       <View style={styles.container}>
@@ -78,6 +135,7 @@ export default class Filtros extends Component<Props> {
       </View>
     );
   }else{
+// Validacion que permite ocultar el formulario de busqueda
     return(
       <View style={styles.container}>
       <FlatList
@@ -102,6 +160,7 @@ export default class Filtros extends Component<Props> {
 }
 
 
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
