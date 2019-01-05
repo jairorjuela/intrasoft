@@ -37,6 +37,7 @@ export default class Filtros extends Component<Props> {
     const nombre = this.state.nombre;
     const apellido = this.state.apellido;
     const documento = this.state.documento;
+    const otorgante = this.state.isChecked;
     if(nombre !== '' && apellido === '' && documento === ''){
       this.setState({
         arr: [],
@@ -49,12 +50,12 @@ export default class Filtros extends Component<Props> {
         if(responseData.status === 400){
           alert("Error")
         }else{
-          this.setState({
-            holi: !this.state.holi,
-            arr: this.state.arr.concat(responseData),
-            nombre: ''
-          });
-        }
+        this.setState({
+          holi: !this.state.holi,
+          arr: this.state.arr.concat(responseData),
+          nombre: ''
+        });
+      }
       })
       .done();
     }else if(nombre === '' && apellido !== '' && documento === ''){
@@ -92,6 +93,32 @@ export default class Filtros extends Component<Props> {
           this.setState({
             holi: !this.state.holi,
             arr: this.state.arr.concat(responseData),
+            documento: ''
+          });
+        }
+      })
+      .done();
+    }else if(nombre !== '' || apellido !== '' || documento !== ''){
+      this.setState({
+        arr: [],
+        nombre: this.state.nombre,
+        apellido: this.state.apellido,
+        documento: this.state.documento
+      });
+      const NOM = this.state.nombre;
+      const NOM1 = this.state.apellido;
+      const NOM2 = this.state.documento;
+      fetch(API+ NOM + '&apellido=' + NOM1 + '&numero Documento=' + NOM2)
+      .then((response) => response.json())
+      .then((responseData) => {
+        if(responseData.status === 400){
+          alert("Error")
+        }else{
+          this.setState({
+            holi: !this.state.holi,
+            arr: this.state.arr.concat(responseData),
+            nombre: '',
+            apellido: '',
             documento: ''
           });
         }
@@ -164,20 +191,20 @@ export default class Filtros extends Component<Props> {
 // Validacion que permite ocultar el formulario de busqueda
     return(
       <View style={styles.container}>
+      <TouchableOpacity onPress={this.search} style={styles.button}>
+        <Text style={styles.buttonText}>Busca de Nuevo</Text>
+      </TouchableOpacity>
       {
         lista.map((l, i) => (
           <ListItem style={styles.item}
             key={i}
             leftAvatar={{ source: { uri: l.fotoPerfil } }}
             title={`Nombre: ${l.nombre} ${l.apellido}`}
-            subtitle={`Numero de documento: ${l.numeroDocumento}`}
+            subtitle={`Numero de documento: ${l.numeroDocumento} Rol: ${l.rolUsuario}`}
             chevron
           />
         ))
       }
-      <TouchableOpacity onPress={this.search} style={styles.button}>
-        <Text style={styles.buttonText}>Busca de Nuevo</Text>
-      </TouchableOpacity>
       </View>
     );
   }
