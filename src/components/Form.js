@@ -13,7 +13,7 @@ export default class Form extends Component<Props> {
         <View style={styles.container}>
         <Logo/>
           <TextInput style={styles.inputBox}
-            placeholder='Email'
+            placeholder='Correo Electronico'
             placeholderTextColor='white'
             textContentType='emailAddress'
             onSubmitEditing={() => this.password.focus()}
@@ -21,7 +21,7 @@ export default class Form extends Component<Props> {
             value={this.state.username}
           />
           <TextInput style={styles.inputBox}
-            placeholder='Password'
+            placeholder='Contraseña'
             placeholderTextColor='white'
             secureTextEntry={true}
             ref={(input) => this.password = input}
@@ -29,7 +29,7 @@ export default class Form extends Component<Props> {
             value={this.state.password}
           />
           <TouchableOpacity onPress={this.login} style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={styles.buttonText}>Ingresa</Text>
           </TouchableOpacity>
         </View>
       );

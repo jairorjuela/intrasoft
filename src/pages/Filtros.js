@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity} from 'react-native';
+import { ListItem } from 'react-native-elements'
+import TouchableScale from 'react-native-touchable-scale';
+import CheckBox from 'react-native-check-box'
+import LinearGradient from 'react-native-linear-gradient'
+
 
 
 // Constantes para realizar las peticiones
@@ -18,10 +23,13 @@ export default class Filtros extends Component<Props> {
       apellido: '',
       documento: '',
       holi: false,
-      arr: []
+      arr: [],
+      isChecked: true,
+      isChecked1: true
     }
     this.search = this.search.bind(this);
   }
+
 
 // Funcion para realizar la busqueda
   search() {
@@ -99,7 +107,7 @@ export default class Filtros extends Component<Props> {
 
   render() {
 // Variable que guarda el JSON de la respuesta del servidor
-    var lista = this.state.obj;
+    var lista = this.state.arr;
 // Validacion que permite mostrar el formulario de busqueda
     if(this.state.holi === false){
       return (
@@ -129,6 +137,24 @@ export default class Filtros extends Component<Props> {
           onChangeText={(documento) => this.setState({documento})}
           value={this.state.documento}
         />
+        <CheckBox
+          onClick={()=>{
+            this.setState({
+              isChecked:!this.state.isChecked
+            })
+          }}
+          isChecked={this.state.isChecked}
+        />
+        <Text style={{marginTop: 5}}>Solicitante</Text>
+        <CheckBox
+          onClick={()=>{
+            this.setState({
+              isChecked1:!this.state.isChecked1
+            })
+          }}
+          isChecked={this.state.isChecked1}
+        />
+        <Text style={{marginTop: 5}}>Otorgante</Text>
         <TouchableOpacity onPress={this.search} style={styles.button}>
           <Text style={styles.buttonText}>Buscar</Text>
         </TouchableOpacity>
@@ -138,18 +164,17 @@ export default class Filtros extends Component<Props> {
 // Validacion que permite ocultar el formulario de busqueda
     return(
       <View style={styles.container}>
-      <FlatList
-        data={this.state.arr}
-        renderItem={
-          ({item}) =>
-            <Text style={styles.item}>
-              {`Nombre: ${item.nombre} ${item.apellido}, Id de Usuario:  ${item.idUsuario}, Numero de documento: ${item.numeroDocumento}`}
-            </Text>
-        }
-        keyExtractor={item => item.idUsuario}
-        ItemSeparatorComponent={this.renderSeparator}
-        ListHeaderComponent={this.renderHeader}
-      />
+      {
+        lista.map((l, i) => (
+          <ListItem style={styles.item}
+            key={i}
+            leftAvatar={{ source: { uri: l.fotoPerfil } }}
+            title={`Nombre: ${l.nombre} ${l.apellido}`}
+            subtitle={`Numero de documento: ${l.numeroDocumento}`}
+            chevron
+          />
+        ))
+      }
       <TouchableOpacity onPress={this.search} style={styles.button}>
         <Text style={styles.buttonText}>Busca de Nuevo</Text>
       </TouchableOpacity>
