@@ -4,7 +4,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Home from './Home'
 
 
-
+// Enrutador a componente Home
 const AppNavigator = createStackNavigator({
   Home: {
     screen: Home

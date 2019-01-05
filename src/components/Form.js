@@ -3,6 +3,8 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'rea
 import Logo from './Logo';
 import Filtros from '../pages/Filtros'
 
+
+// Formulario de Logeo
 type Props = {};
 export default class Form extends Component<Props> {
   render() {
@@ -38,9 +40,7 @@ export default class Form extends Component<Props> {
         </View>
       );
     }
-
   }
-
   constructor(Props) {
     super(Props);
     this.state = {
@@ -51,6 +51,7 @@ export default class Form extends Component<Props> {
     };
   }
 
+// Funcion para realizar la peticion PUT
   login = () => {
     fetch('http://3.82.243.220:8000/api/loginUsuarioSistema', {
       method: 'PUT',
@@ -81,7 +82,11 @@ export default class Form extends Component<Props> {
   }
 
 }
+// Fin de la funcion
 
+
+
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
