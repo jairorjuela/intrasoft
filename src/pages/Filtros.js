@@ -21,6 +21,7 @@ export default class Filtros extends Component<Props> {
   search() {
     const arr = this.state.arr
     this.setState({
+      arr: [],
       nombre: this.state.nombre,
     });
     const NOM = this.state.nombre;
@@ -39,7 +40,6 @@ export default class Filtros extends Component<Props> {
     })
     .done();
   }
-
 
 
   render() {
